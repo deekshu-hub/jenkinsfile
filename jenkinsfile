@@ -1,0 +1,18 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build Docker Image') {
+            steps {
+               sh 'docker build -t myimg .'
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                sh'docker rm -f c1 || true'
+                sh 'docker run -d --name c1 -p 80:80 myimg'
+            }
+        }
+    }
+}
